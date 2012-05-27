@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello Websockets a la Clojure</title>
+<style>
+  body {font-family: 'Comic Sans MS'}
+</style>
+</head>
+<body>
+  <input type="text" id="input_text" />
+  <input type="button" id="send_button" value="Send"/>
+
+  <div id="messages">
+  </div>
+
+  <script>
+    ws = new WebSocket("ws://localhost:9000");
+
+    window.onbeforeunload = function(){
+      console.log('on beforeunload');
+      ws.close();
+    };
+
+    ws.onmessage = function(event) {
+      console.log('on message');
+      var messages = document.getElementById('messages');
+      var message = document.createElement('div');
+      message.innerHTML = event.data;
+      message.setAttribute('class', 'message');
+      messages.appendChild(message);
+    };
+
+    ws.onopen = function(event) {
+      ws.send("Connected.");
+    };
+
+    ws.onerror = function (error) {
+      console.log('WebSocket Error: ' + error);
+    };
+
+    ws.state_string = function() {
+      var states = {
+        0: 'connecting',
+        1: 'open',
+        2: 'closing',
+        3: 'closed'
+      };
+      return states[this.readyState];
+    };
+
+    var transmit = function() {
+      var text = document.getElementById('input_text');
+      ws.send(text.value);
+      text.value = '';
+    };
+
+    transmitter = document.getElementById('input_text');
+    transmitter.addEventListener('change', transmit);
+
+    send_button = document.getElementById('send_button');
+    send_button.addEventListener('click', transmit);
+  </script>
+</body>
+</html>
+

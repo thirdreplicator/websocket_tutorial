@@ -1,0 +1,28 @@
+
+INSTALL
+
+1. Install Leingingen https://github.com/technomancy/leiningen
+  -- Leingingen is like Clojure's version of RVM.
+
+2. Fire up the sinatra app to serve the HTML file:
+  * cd ruby
+  * ruby sinatra.rb
+
+Now you should have an HTML file being served at http://localhost:4567/
+
+3. Fire up clojure to :
+  * lein repl
+
+; In the REPL command line:
+
+  (require 'hello.core)
+
+Now, you should have a WebSocket server on port 9000.
+
+4. Point your browser to http://localhost:4567/
+
+This should work on Chrome, Safari and Firefox.  I haven't tested it on
+IE 9, yet.
+
+
+Enjoy.
