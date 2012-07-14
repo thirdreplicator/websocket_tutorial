@@ -1,3 +1,5 @@
+(ns chat.core)
+
 (use 'lamina.core 'aleph.http)
 
 (def broadcast-channel (channel))
